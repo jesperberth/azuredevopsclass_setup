@@ -49,5 +49,18 @@ do {
 
 # End RG Webserver
 
+# Begin Azure Container Registry
+
+do {
+    $response = Read-Host -Prompt "Delete container repositorys y/n"
+    if ($response -eq 'y') {
+        foreach ($repo in az acr repository list --name teamredhatarrow --output tsv ) {
+        Write-Output "Delete container repository $repo"
+        }
+    $response = "n"
+    }
+} until ($response -eq 'n')
+
+# End Azure Container Registry
 write-host "Remaining resource groups"
 Get-AzResourceGroup | Select-Object ResourceGroupName
