@@ -51,17 +51,17 @@ do {
 
 # Begin Azure Container Registry
 
+write-host -ForegroundColor Yellow "Container repository to delete'n"
+
+az acr repository list --name teamredhatarrow --output tsv
+
 do {
     $response = Read-Host -Prompt "Delete container repositorys y/n"
-
-    write-host -ForegroundColor Yellow "webserver* resourcegroups to delete'n"
-
-    az acr repository list --name teamredhatarrow --output tsv
 
     if ($response -eq 'y') {
         foreach ($repo in az acr repository list --name teamredhatarrow --output tsv ) {
         Write-Output "Deleting container repository $repo"
-        az acr repository delete --name teamredhatarrow --image $repo
+        az acr repository delete --name teamredhatarrow --image $repo --yes
         }
     $response = "n"
     }
