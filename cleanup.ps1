@@ -53,9 +53,15 @@ do {
 
 do {
     $response = Read-Host -Prompt "Delete container repositorys y/n"
+
+    write-host -ForegroundColor Yellow "webserver* resourcegroups to delete'n"
+
+    az acr repository list --name teamredhatarrow --output tsv
+
     if ($response -eq 'y') {
         foreach ($repo in az acr repository list --name teamredhatarrow --output tsv ) {
-        Write-Output "Delete container repository $repo"
+        Write-Output "Deleting container repository $repo"
+        az acr repository delete --name teamredhatarrow --image $repo
         }
     $response = "n"
     }
